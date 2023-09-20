@@ -41,7 +41,6 @@
                         <input
                             type="password"
                             name="password"
-                            value="<%= password %>"
                             class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
                         />
                         <div id="password-validation-messages">
@@ -55,7 +54,6 @@
                         <input
                             type="password"
                             name="passwordConfirm"
-                            value="<%= passwordConfirm %>"
                             class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
                         />
                         <div id="password-confirm-validation-messages">
@@ -100,12 +98,22 @@
             const passwordConfirmInput = document.querySelector('input[name="passwordConfirm"]');
             const passwordValidationMessages = document.getElementById('password-validation-messages');
             const passwordConfirmValidationMessages = document.getElementById('password-confirm-validation-messages');
+            
+            function resetValidationMessages() {
+                const passwordValidationParagraphs = passwordValidationMessages.querySelectorAll('p');
+                for (const paragraph of passwordValidationParagraphs) {
+                    paragraph.style.color = 'red';
+                }
+                passwordConfirmValidationMessages.querySelector('p').style.color = 'red';
+            }
         
             passwordInput.addEventListener('keyup', () => {
                 const password = passwordInput.value;
                 const isLengthValid = password.length >= 8;
                 const hasNumber = /[0-9]/.test(password);
                 const hasUppercase = /[A-Z]/.test(password);
+        
+                resetValidationMessages();
         
                 if (isLengthValid) {
                     passwordValidationMessages.querySelectorAll('p')[0].style.color = 'green';
@@ -124,11 +132,10 @@
         
                 if (password === passwordConfirm) {
                     passwordConfirmValidationMessages.querySelector('p').style.color = 'green';
+                } else {
+                    passwordConfirmValidationMessages.querySelector('p').style.color = 'red';
                 }
             });
         </script>
-        
-        
-        
     </body>
 </html>
